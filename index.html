@@ -1,0 +1,1909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nitro Forge Racing Team | Formula Bharat 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --flame: #FF4500;
+    --orange: #FF6B1A;
+    --gold: #C9A84C;
+    --carbon: #0a0a0a;
+    --gunmetal: #141414;
+    --dark: #1e1e1e;
+    --mid: #2a2a2a;
+    --light-grey: #6b7280;
+    --white: #f0f0f0;
+    --glow: 0 0 20px rgba(255,69,0,0.4), 0 0 40px rgba(255,69,0,0.2);
+    --glow-subtle: 0 0 10px rgba(255,69,0,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--carbon);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Carbon fiber texture overlay */
+  .carbon-bg {
+    background-color: var(--gunmetal);
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px),
+      repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px);
+  }
+
+  /* LOADING SCREEN */
+  #loader {
+    position: fixed; inset: 0;
+    background: var(--carbon);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+  #loader.hidden { opacity: 0; visibility: hidden; }
+
+  .loader-logo {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    background: linear-gradient(135deg, var(--flame), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: pulseGlow 1.5s ease-in-out infinite;
+  }
+  .loader-sub {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.4em;
+    color: var(--light-grey);
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+  }
+  .loader-bar {
+    width: 220px; height: 2px;
+    background: var(--mid);
+    margin-top: 2rem;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .loader-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--flame), var(--gold));
+    animation: loadFill 1.8s ease forwards;
+  }
+  @keyframes loadFill { from { width: 0 } to { width: 100% } }
+  @keyframes pulseGlow {
+    0%,100% { filter: drop-shadow(0 0 8px rgba(255,69,0,0.6)); }
+    50% { filter: drop-shadow(0 0 20px rgba(255,69,0,0.9)); }
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 1rem 4vw;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,69,0,0.15);
+    transition: padding 0.3s;
+  }
+  nav.scrolled { padding: 0.6rem 4vw; border-bottom-color: rgba(255,69,0,0.3); }
+
+  .nav-brand {
+    display: flex; align-items: center; gap: 0.75rem;
+    text-decoration: none;
+  }
+  .nav-emblem {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--flame), var(--gold));
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem; font-weight: 900;
+    color: var(--carbon);
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    box-shadow: var(--glow-subtle);
+  }
+  .nav-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .nav-name span { color: var(--flame); }
+
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem; font-weight: 600;
+    letter-spacing: 0.1em;
+    color: rgba(240,240,240,0.7);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--flame);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.4rem;
+    background: var(--flame);
+    color: var(--white);
+    border: none; border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .nav-cta:hover { background: var(--orange); box-shadow: var(--glow-subtle); }
+
+  .nav-hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; background: none; border: none; }
+  .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--white); transition: 0.3s; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+    background: var(--carbon);
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(255,69,0,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 80% at 0% 100%, rgba(201,168,76,0.05) 0%, transparent 50%),
+      linear-gradient(135deg, #0a0a0a 0%, #0f0f0f 50%, #0a0a0a 100%);
+  }
+
+  /* Grid lines */
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,69,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,69,0,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  /* Diagonal slash accent */
+  .hero-slash {
+    position: absolute;
+    top: 0; right: 15%;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, transparent, var(--flame) 30%, var(--gold) 70%, transparent);
+    opacity: 0.3;
+    transform: skewX(-15deg);
+  }
+  .hero-slash2 {
+    position: absolute;
+    top: 0; right: 17%;
+    width: 2px; height: 100%;
+    background: linear-gradient(180deg, transparent, var(--orange) 50%, transparent);
+    opacity: 0.15;
+    transform: skewX(-15deg);
+  }
+
+  /* Ember particles */
+  .embers { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .ember {
+    position: absolute;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--flame);
+    animation: floatEmber linear infinite;
+    opacity: 0;
+  }
+  @keyframes floatEmber {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 0.8; }
+    100% { transform: translateY(-20vh) scale(1.5); opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 6vw;
+    max-width: 900px;
+    padding-top: 80px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--flame);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block; width: 32px; height: 1px;
+    background: var(--flame);
+  }
+
+  .hero-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s forwards;
+  }
+  .hero-title .nitro { color: var(--flame); text-shadow: var(--glow); }
+  .hero-title .forge { color: var(--gold); }
+  .hero-title .racing {
+    display: block;
+    color: rgba(240,240,240,0.9);
+    font-size: 0.6em;
+    letter-spacing: 0.15em;
+  }
+  .hero-title .team {
+    display: block;
+    color: rgba(240,240,240,0.4);
+    font-size: 0.35em;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    font-family: 'Inter', sans-serif;
+    text-transform: none;
+    margin-top: 0.5rem;
+  }
+
+  .hero-tagline {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 500;
+    color: rgba(240,240,240,0.6);
+    letter-spacing: 0.05em;
+    margin: 1.5rem 0 0.5rem;
+    border-left: 3px solid var(--flame);
+    padding-left: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s forwards;
+  }
+
+  .hero-sub {
+    font-size: 0.9rem;
+    color: rgba(240,240,240,0.45);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.1s forwards;
+  }
+
+  .hero-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.3s forwards;
+  }
+
+  .btn-primary {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem; font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    background: linear-gradient(135deg, var(--flame), var(--orange));
+    color: var(--white);
+    border: none; border-radius: 2px;
+    text-decoration: none; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--orange), var(--gold));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--glow); }
+  .btn-primary:hover::before { opacity: 1; }
+  .btn-primary span { position: relative; z-index: 1; }
+
+  .btn-secondary {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem; font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(240,240,240,0.25);
+    border-radius: 2px;
+    text-decoration: none; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--flame); color: var(--flame); }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    display: flex; justify-content: space-around;
+    padding: 1.5rem 6vw;
+    background: linear-gradient(90deg, rgba(255,69,0,0.08), rgba(201,168,76,0.05), rgba(255,69,0,0.08));
+    border-top: 1px solid rgba(255,69,0,0.15);
+    z-index: 2;
+  }
+
+  .hero-stat { text-align: center; }
+  .stat-num {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-weight: 700;
+    color: var(--flame);
+  }
+  .stat-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: rgba(240,240,240,0.4);
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  /* SECTION COMMONS */
+  section { padding: 6rem 6vw; position: relative; }
+
+  .section-eyebrow {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--flame);
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .section-eyebrow::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--flame);
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    color: var(--white);
+  }
+  .section-title .accent { color: var(--flame); }
+
+  .slash-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 2rem 0;
+  }
+  .slash-divider::before, .slash-divider::after {
+    content: '';
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(255,69,0,0.4), transparent);
+  }
+  .slash-divider::after {
+    background: linear-gradient(270deg, rgba(255,69,0,0.4), transparent);
+  }
+  .slash-icon {
+    width: 8px; height: 24px;
+    background: var(--flame);
+    transform: skewX(-15deg);
+    box-shadow: var(--glow-subtle);
+  }
+
+  /* ABOUT */
+  #about { background: var(--gunmetal); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 3rem auto 0;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: rgba(240,240,240,0.65);
+    margin-bottom: 1.2rem;
+  }
+  .about-text p strong { color: var(--white); font-weight: 600; }
+
+  .about-pillars {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .pillar {
+    background: var(--dark);
+    border: 1px solid rgba(255,69,0,0.12);
+    border-left: 3px solid var(--flame);
+    padding: 1rem 1.2rem;
+    border-radius: 2px;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .pillar:hover { background: rgba(255,69,0,0.05); border-color: rgba(255,69,0,0.4); }
+
+  .pillar-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
+  .pillar-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem; font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .about-visual {
+    position: relative;
+  }
+  .about-badge {
+    background: var(--dark);
+    border: 1px solid rgba(255,69,0,0.2);
+    border-radius: 4px;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-badge::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--flame), var(--gold));
+  }
+  .badge-year {
+    font-family: 'Orbitron', monospace;
+    font-size: 4rem; font-weight: 900;
+    color: var(--flame);
+    line-height: 1;
+    text-shadow: 0 0 40px rgba(255,69,0,0.3);
+  }
+  .badge-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.8rem; letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--light-grey);
+  }
+
+  .formula-badge {
+    margin-top: 1.5rem;
+    background: linear-gradient(135deg, rgba(255,69,0,0.1), rgba(201,168,76,0.1));
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 4px;
+    padding: 1.5rem;
+  }
+  .formula-badge .fb { font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; }
+  .formula-badge .fb-detail { font-size: 0.8rem; color: var(--light-grey); margin-top: 0.3rem; }
+
+  /* FORMULA BHARAT */
+  #formulabharat {
+    background: var(--carbon);
+    background-image: linear-gradient(rgba(255,69,0,0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,69,0,0.02) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .fb-intro {
+    max-width: 700px;
+    margin: 2rem 0 4rem;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: rgba(240,240,240,0.6);
+  }
+
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0 4rem;
+  }
+
+  .event-card {
+    background: var(--gunmetal);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .event-card:hover { transform: translateY(-4px); border-color: rgba(255,69,0,0.3); }
+  .event-card.static-event { border-top: 2px solid var(--gold); }
+  .event-card.dynamic-event { border-top: 2px solid var(--flame); }
+
+  .event-type {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.65rem; font-weight: 600;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--light-grey);
+    margin-bottom: 0.75rem;
+  }
+  .event-card.static-event .event-type { color: var(--gold); }
+  .event-card.dynamic-event .event-type { color: var(--flame); }
+
+  .event-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+  }
+  .event-desc { font-size: 0.85rem; color: rgba(240,240,240,0.5); margin-top: 0.5rem; line-height: 1.6; }
+
+  .countdown-wrapper {
+    margin: 3rem 0;
+    background: var(--gunmetal);
+    border: 1px solid rgba(255,69,0,0.2);
+    border-radius: 4px;
+    padding: 2.5rem;
+    max-width: 600px;
+  }
+  .countdown-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.8rem; letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--flame);
+    margin-bottom: 1.5rem;
+  }
+  .countdown-grid {
+    display: flex; gap: 1.5rem; align-items: center;
+  }
+  .cd-unit { text-align: center; }
+  .cd-num {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+  }
+  .cd-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.7rem; letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--light-grey);
+    margin-top: 0.3rem;
+  }
+  .cd-sep {
+    font-family: 'Orbitron', monospace;
+    font-size: 2rem; font-weight: 700;
+    color: var(--flame);
+    margin-bottom: 1rem;
+  }
+
+  /* VEHICLE */
+  #vehicle { background: var(--gunmetal); }
+
+  .vehicle-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  .car-render {
+    background: var(--dark);
+    border: 1px solid rgba(255,69,0,0.15);
+    border-radius: 4px;
+    aspect-ratio: 16/9;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .car-render::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(255,69,0,0.06) 0%, transparent 70%);
+  }
+  .car-placeholder-icon { font-size: 5rem; opacity: 0.15; }
+  .car-placeholder-text {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem; font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(240,240,240,0.3);
+    margin-top: 1rem;
+  }
+  .car-badge {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(90deg, rgba(255,69,0,0.8), rgba(201,168,76,0.6));
+    padding: 0.6rem 1.2rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .car-designation {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.1em;
+  }
+  .car-status {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .development-phases { }
+
+  .dev-phase {
+    margin-bottom: 1.25rem;
+  }
+  .phase-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 0.4rem;
+  }
+  .phase-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem; font-weight: 600;
+    letter-spacing: 0.05em;
+    color: rgba(240,240,240,0.8);
+  }
+  .phase-pct {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    color: var(--flame);
+  }
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--flame), var(--gold));
+    transition: width 1.2s ease;
+    width: 0;
+  }
+
+  /* ENGINEERING */
+  #engineering { background: var(--carbon); }
+
+  .systems-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .system-card {
+    background: var(--gunmetal);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .system-card:hover { transform: translateY(-4px); border-color: rgba(255,69,0,0.25); }
+  .system-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--flame), var(--gold));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .system-card:hover::before { opacity: 1; }
+
+  .sys-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .sys-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+  .sys-status {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .sys-status.done { color: var(--gold); }
+  .sys-status.progress { color: var(--flame); }
+  .sys-status.concept { color: var(--light-grey); }
+
+  .sys-focus { font-size: 0.85rem; color: rgba(240,240,240,0.5); line-height: 1.7; }
+
+  /* JOURNEY / TIMELINE */
+  #journey { background: var(--gunmetal); }
+
+  .timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 3rem auto 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 50%; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--flame), var(--gold), var(--flame));
+    transform: translateX(-50%);
+  }
+
+  .tl-item {
+    display: flex;
+    margin-bottom: 2.5rem;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .tl-item.visible { opacity: 1; transform: translateY(0); }
+
+  .tl-item:nth-child(odd) { flex-direction: row-reverse; }
+  .tl-item:nth-child(odd) .tl-content { text-align: right; padding-right: 3rem; padding-left: 0; }
+
+  .tl-content {
+    width: calc(50% - 20px);
+    padding-left: 3rem;
+    position: relative;
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px; height: 12px;
+    background: var(--flame);
+    border: 2px solid var(--carbon);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255,69,0,0.5);
+    z-index: 1;
+    flex-shrink: 0;
+  }
+  .tl-item.active .tl-dot { background: var(--gold); box-shadow: 0 0 12px rgba(201,168,76,0.7); }
+
+  .tl-milestone {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    color: var(--flame);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .tl-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0.2rem 0 0.4rem;
+  }
+  .tl-desc { font-size: 0.82rem; color: rgba(240,240,240,0.45); line-height: 1.6; }
+
+  /* TEAM */
+  #team { background: var(--carbon); }
+
+  .team-lead-row {
+    display: flex; gap: 2rem; justify-content: center;
+    margin: 3rem 0 2rem;
+    flex-wrap: wrap;
+  }
+
+  .member-card {
+    background: var(--gunmetal);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: border-color 0.3s, transform 0.3s;
+    min-width: 160px;
+  }
+  .member-card:hover { border-color: rgba(255,69,0,0.3); transform: translateY(-4px); }
+
+  .member-avatar {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: var(--dark);
+    border: 2px solid rgba(255,69,0,0.3);
+    margin: 0 auto 0.8rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+    overflow: hidden;
+  }
+  .member-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+  .member-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .member-role {
+    font-size: 0.75rem;
+    color: var(--flame);
+    font-weight: 500;
+    margin-top: 0.2rem;
+  }
+  .member-dept {
+    font-size: 0.7rem;
+    color: rgba(240,240,240,0.35);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  .dept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .dept-header {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 1rem 0 0.5rem;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    margin-top: 2rem;
+    grid-column: 1 / -1;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .dept-header::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.2); }
+
+  /* SPONSORS */
+  #sponsors { background: var(--gunmetal); }
+
+  .sponsors-content {
+    max-width: 900px;
+    margin: 3rem auto 0;
+  }
+
+  .sponsor-hero {
+    background: var(--dark);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    padding: 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+  .sponsor-hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .sponsor-hero-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+  .sponsor-hero-sub { font-size: 1rem; color: rgba(240,240,240,0.6); max-width: 500px; margin: 0 auto 2rem; line-height: 1.7; }
+
+  .sponsor-benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .benefit-item {
+    background: var(--gunmetal);
+    border: 1px solid rgba(255,69,0,0.12);
+    border-radius: 4px;
+    padding: 1.2rem;
+    text-align: center;
+  }
+  .benefit-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+  .benefit-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--flame);
+  }
+  .benefit-desc { font-size: 0.8rem; color: rgba(240,240,240,0.5); margin-top: 0.3rem; }
+
+  .partner-slots {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .partner-slot {
+    background: var(--dark);
+    border: 1px dashed rgba(255,255,255,0.1);
+    border-radius: 4px;
+    padding: 2rem 1rem;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,240,240,0.2);
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+  .partner-slot:hover { border-color: rgba(255,69,0,0.3); color: rgba(240,240,240,0.4); }
+
+  /* GALLERY */
+  #gallery { background: var(--carbon); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  .gallery-item {
+    aspect-ratio: 16/10;
+    background: var(--gunmetal);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    cursor: pointer; transition: transform 0.3s, border-color 0.3s;
+  }
+  .gallery-item:hover { transform: scale(1.02); border-color: rgba(255,69,0,0.3); }
+  .gallery-item.tall { grid-row: span 2; }
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,69,0,0.05), rgba(201,168,76,0.03));
+  }
+  .gallery-icon { font-size: 2rem; opacity: 0.15; }
+  .gallery-caption {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,240,240,0.3);
+    margin-top: 0.5rem;
+  }
+
+  /* CONTACT */
+  #contact { background: var(--gunmetal); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 3rem;
+  }
+
+  .contact-info h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+  .contact-detail {
+    display: flex; align-items: flex-start; gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .contact-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .contact-text {
+    font-size: 0.9rem;
+    color: rgba(240,240,240,0.6);
+    line-height: 1.5;
+  }
+  .contact-text a { color: var(--flame); text-decoration: none; }
+  .contact-text a:hover { text-decoration: underline; }
+
+  .social-row {
+    display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap;
+  }
+  .social-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: var(--dark);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 2px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(240,240,240,0.6);
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .social-link:hover { border-color: var(--flame); color: var(--flame); }
+
+  .contact-form { }
+  .form-group { margin-bottom: 1rem; }
+  .form-label {
+    display: block;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--light-grey);
+    margin-bottom: 0.4rem;
+  }
+  .form-input, .form-textarea {
+    width: 100%;
+    background: var(--dark);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 2px;
+    padding: 0.75rem 1rem;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--flame); }
+  .form-textarea { resize: vertical; min-height: 120px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--carbon);
+    border-top: 1px solid rgba(255,69,0,0.15);
+    padding: 3rem 6vw 1.5rem;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 2rem;
+  }
+  .footer-brand { }
+  .footer-logo-text {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.2rem; font-weight: 900;
+    background: linear-gradient(135deg, var(--flame), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .footer-tagline {
+    font-family: 'Rajdhani', sans-serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: rgba(240,240,240,0.4);
+    font-weight: 500;
+  }
+  .footer-nav-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--flame);
+    margin-bottom: 1rem;
+  }
+  .footer-nav-links { list-style: none; }
+  .footer-nav-links li { margin-bottom: 0.5rem; }
+  .footer-nav-links a {
+    font-size: 0.85rem;
+    color: rgba(240,240,240,0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-nav-links a:hover { color: var(--flame); }
+  .footer-bottom {
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 0.5rem;
+  }
+  .footer-copy {
+    font-size: 0.78rem;
+    color: rgba(240,240,240,0.25);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MOBILE NAV */
+  .mobile-menu {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10,10,10,0.97);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 2rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.8rem; font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .mobile-menu a:hover { color: var(--flame); }
+  .mobile-close {
+    position: absolute; top: 1.5rem; right: 2rem;
+    background: none; border: none;
+    color: var(--white); font-size: 2rem; cursor: pointer;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .nav-links, .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+    .about-grid, .vehicle-layout, .contact-grid, .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .timeline::before { left: 20px; }
+    .tl-item, .tl-item:nth-child(odd) { flex-direction: column; }
+    .tl-item:nth-child(odd) .tl-content { text-align: left; padding-right: 0; padding-left: 3rem; }
+    .tl-content { width: 100%; padding-left: 3rem; }
+    .tl-dot { left: 20px; top: 0; transform: translateX(-50%); }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .partner-slots { grid-template-columns: 1fr 1fr; }
+    .hero-stats { flex-wrap: wrap; gap: 1rem; }
+    section { padding: 4rem 5vw; }
+  }
+  @media (max-width: 600px) {
+    .about-pillars { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .partner-slots { grid-template-columns: 1fr; }
+    .countdown-grid { gap: 0.8rem; }
+    .systems-grid { grid-template-columns: 1fr; }
+    .gallery-item.tall { grid-row: span 1; }
+    .footer-top { grid-template-columns: 1fr; }
+    .hero-stats { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loader">
+  <div class="loader-logo">NITRO FORGE</div>
+  <div class="loader-sub">Racing Team · JNTUH UCESTH</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  <a href="#about" onclick="closeMobileMenu()">About</a>
+  <a href="#formulabharat" onclick="closeMobileMenu()">Formula Bharat</a>
+  <a href="#vehicle" onclick="closeMobileMenu()">Vehicle</a>
+  <a href="#journey" onclick="closeMobileMenu()">Journey</a>
+  <a href="#team" onclick="closeMobileMenu()">Team</a>
+  <a href="#sponsors" onclick="closeMobileMenu()">Sponsors</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-brand">
+    <div class="nav-emblem">NF</div>
+    <div class="nav-name">NITRO <span>FORGE</span><br><span style="color:rgba(240,240,240,0.45);font-size:0.6rem;letter-spacing:0.2em;font-family:Inter,sans-serif;font-weight:400">RACING TEAM</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#formulabharat">Formula Bharat</a></li>
+    <li><a href="#vehicle">Vehicle</a></li>
+    <li><a href="#engineering">Engineering</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#sponsors">Sponsors</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#sponsors" class="nav-cta">Partner With Us</a>
+  <button class="nav-hamburger" onclick="openMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-slash"></div>
+  <div class="hero-slash2"></div>
+  <div class="embers" id="embers"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Formula Bharat 2027 · JNTUH UCESTH · Hyderabad</div>
+    <h1 class="hero-title">
+      <span class="nitro">Nitro</span> <span class="forge">Forge</span>
+      <span class="racing">Racing Team</span>
+      <span class="team">JNTUH University College of Engineering Science &amp; Technology</span>
+    </h1>
+    <p class="hero-tagline">"Where Speed is Engineered, Not Imagined."</p>
+    <p class="hero-sub">A Formula Student team forging the future of Indian motorsport engineering, preparing for Formula Bharat 2027 with precision, fire, and relentless innovation.</p>
+    <div class="hero-btns">
+      <a href="#about" class="btn-primary"><span>Explore Our Journey</span></a>
+      <a href="#sponsors" class="btn-secondary">Partner With Us</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="stat-num" data-count="2027" data-suffix="">FB2027</div>
+      <div class="stat-label">Formula Bharat Target</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num" data-count="30" data-suffix="+">0+</div>
+      <div class="stat-label">Team Members</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num">NF-01</div>
+      <div class="stat-label">First Race Car · In Development</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num" data-count="100" data-suffix="%">0%</div>
+      <div class="stat-label">Student Driven</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="carbon-bg">
+  <div class="section-eyebrow">Our Identity</div>
+  <h2 class="section-title">Forged in <span class="accent">Fire</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>Nitro Forge Racing Team is a student-led Formula Student team founded with the vision of creating a world-class engineering platform where <strong>innovation, manufacturing excellence, and motorsport passion</strong> converge into something extraordinary.</p>
+      <p>As a first-generation Formula Student team from JNTUH UCESTH, we are building our foundation from the ground up. Every component, every design decision, every manufacturing process — forged with purpose. The car is not merely built. <strong>It is forged.</strong></p>
+      <p>Our mission is not simply to build a race car. Our mission is to forge engineers capable of solving real-world challenges through design, teamwork, manufacturing, and innovation.</p>
+      <div class="about-pillars">
+        <div class="pillar"><div class="pillar-icon">⚡</div><div class="pillar-title">Nitro — Speed</div></div>
+        <div class="pillar"><div class="pillar-icon">🔥</div><div class="pillar-title">Forge — Craftsmanship</div></div>
+        <div class="pillar"><div class="pillar-icon">🎯</div><div class="pillar-title">Precision</div></div>
+        <div class="pillar"><div class="pillar-icon">💡</div><div class="pillar-title">Innovation</div></div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="about-badge">
+        <div class="badge-year">2026</div>
+        <div class="badge-label">Founded · Year One</div>
+        <div style="margin-top:1rem;font-size:0.8rem;color:rgba(240,240,240,0.4);line-height:1.6;">First-generation Formula<br>Student team · JNTUH UCESTH<br>Hyderabad, Telangana</div>
+      </div>
+      <div class="formula-badge">
+        <div class="fb">🏁 Formula Bharat 2027</div>
+        <div class="fb-detail">Combustion Vehicle Category · India's Premier Formula Student Competition</div>
+      </div>
+      <div style="margin-top:1rem;background:var(--dark);border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:1.2rem;">
+        <div style="font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--light-grey);margin-bottom:0.5rem;">Core Philosophy</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:600;color:var(--white);line-height:1.5;">"Forging raw engineering into explosive performance."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULA BHARAT -->
+<section id="formulabharat">
+  <div class="section-eyebrow">The Competition</div>
+  <h2 class="section-title"><span class="accent">Formula</span> Bharat 2027</h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <p class="fb-intro reveal">Formula Bharat is India's premier Formula Student competition where engineering students design, manufacture, validate, and race a formula-style race car — competing across both static and dynamic events that test every aspect of the vehicle and the team behind it.</p>
+
+  <div class="events-grid reveal">
+    <div class="event-card static-event">
+      <div class="event-type">⬡ Static Event</div>
+      <div class="event-name">Engineering Design</div>
+      <div class="event-desc">Judges evaluate the technical merit and innovation of the vehicle design against the rules and engineering best practices.</div>
+    </div>
+    <div class="event-card static-event">
+      <div class="event-type">⬡ Static Event</div>
+      <div class="event-name">Cost &amp; Manufacturing</div>
+      <div class="event-desc">Teams present a detailed cost report demonstrating real-world manufacturing awareness and economic considerations.</div>
+    </div>
+    <div class="event-card static-event">
+      <div class="event-type">⬡ Static Event</div>
+      <div class="event-name">Business Presentation</div>
+      <div class="event-desc">A business case for producing and selling the vehicle as a marketable product to a fictitious manufacturer.</div>
+    </div>
+    <div class="event-card dynamic-event">
+      <div class="event-type">◆ Dynamic Event</div>
+      <div class="event-name">Acceleration</div>
+      <div class="event-desc">Straight-line sprint over 75 meters from a standing start — pure powertrain performance.</div>
+    </div>
+    <div class="event-card dynamic-event">
+      <div class="event-type">◆ Dynamic Event</div>
+      <div class="event-name">Skid Pad &amp; Autocross</div>
+      <div class="event-desc">Circular handling test and a tight technical course evaluating lateral dynamics and driver skill.</div>
+    </div>
+    <div class="event-card dynamic-event">
+      <div class="event-type">◆ Dynamic Event</div>
+      <div class="event-name">Endurance &amp; Efficiency</div>
+      <div class="event-desc">The flagship event — a 22-kilometre race that tests reliability, driver performance, and fuel efficiency over time.</div>
+    </div>
+  </div>
+
+  <div class="countdown-wrapper reveal">
+    <div class="countdown-label">🏁 Countdown to Formula Bharat 2027</div>
+    <div class="countdown-grid">
+      <div class="cd-unit"><div class="cd-num" id="cd-days">---</div><div class="cd-label">Days</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num" id="cd-hours">--</div><div class="cd-label">Hours</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num" id="cd-mins">--</div><div class="cd-label">Minutes</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num" id="cd-secs">--</div><div class="cd-label">Seconds</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VEHICLE -->
+<section id="vehicle" class="carbon-bg">
+  <div class="section-eyebrow">First Machine</div>
+  <h2 class="section-title">Project <span class="accent">NF-01</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="vehicle-layout reveal">
+    <div>
+      <div class="car-render">
+        <div class="car-placeholder-icon">🏎</div>
+        <div class="car-placeholder-text">NF-01 Concept Render Coming Soon</div>
+        <div class="car-badge">
+          <div class="car-designation">NF-01</div>
+          <div class="car-status">⚙ Under Development</div>
+        </div>
+      </div>
+      <div style="margin-top:1rem;background:var(--dark);border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:1.2rem;">
+        <p style="font-size:0.85rem;color:rgba(240,240,240,0.5);line-height:1.7;">NF-01 represents the first Formula Student race car developed by Nitro Forge Racing Team — built around the philosophy of lightweight design, structural integrity, performance, and reliability. Every component embodies our vision of engineering excellence.</p>
+      </div>
+    </div>
+    <div class="development-phases">
+      <div style="font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--flame);margin-bottom:1.5rem;">Development Status</div>
+      <div class="dev-phase">
+        <div class="phase-header"><span class="phase-name">Concept Design</span><span class="phase-pct">100%</span></div>
+        <div class="progress-bar"><div class="progress-fill" data-width="100"></div></div>
+      </div>
+      <div class="dev-phase">
+        <div class="phase-header"><span class="phase-name">Chassis Design</span><span class="phase-pct">100%</span></div>
+        <div class="progress-bar"><div class="progress-fill" data-width="100"></div></div>
+      </div>
+      <div class="dev-phase">
+        <div class="phase-header"><span class="phase-name">CAD Development</span><span class="phase-pct">60%</span></div>
+        <div class="progress-bar"><div class="progress-fill" data-width="60"></div></div>
+      </div>
+      <div class="dev-phase">
+        <div class="phase-header"><span class="phase-name">Simulation &amp; Analysis</span><span class="phase-pct">40%</span></div>
+        <div class="progress-bar"><div class="progress-fill" data-width="40"></div></div>
+      </div>
+      <div class="dev-phase">
+        <div class="phase-header"><span class="phase-name">Manufacturing</span><span class="phase-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" data-width="0"></div></div>
+      </div>
+      <div class="dev-phase">
+        <div class="phase-header"><span class="phase-name">Testing &amp; Validation</span><span class="phase-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" data-width="0"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGINEERING -->
+<section id="engineering">
+  <div class="section-eyebrow">Technical Overview</div>
+  <h2 class="section-title">Design &amp; <span class="accent">Engineering</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="systems-grid reveal">
+    <div class="system-card">
+      <div class="sys-icon">🔩</div>
+      <div class="sys-name">Chassis System</div>
+      <div class="sys-status done">✦ Design Completed</div>
+      <div class="sys-focus">Safety-first frame engineered for structural strength and driver protection, fully compliant with Formula Bharat regulations. Steel space-frame architecture optimised for torsional rigidity.</div>
+    </div>
+    <div class="system-card">
+      <div class="sys-icon">⚙️</div>
+      <div class="sys-name">Powertrain</div>
+      <div class="sys-status progress">● In Development</div>
+      <div class="sys-focus">Combustion engine integration focused on peak performance, torque delivery, and long-run reliability. Drivetrain layout optimised for the endurance event.</div>
+    </div>
+    <div class="system-card">
+      <div class="sys-icon">🔧</div>
+      <div class="sys-name">Suspension</div>
+      <div class="sys-status progress">● In Development</div>
+      <div class="sys-focus">Double-wishbone setup designed for precise handling and maximum driver feedback. Geometry validated through kinematic simulation for all competition events.</div>
+    </div>
+    <div class="system-card">
+      <div class="sys-icon">🌬️</div>
+      <div class="sys-name">Aerodynamics</div>
+      <div class="sys-status concept">◌ Concept Stage</div>
+      <div class="sys-focus">Front wing and diffuser concept under development targeting meaningful downforce gains within the weight and cost constraints of a first-year build.</div>
+    </div>
+    <div class="system-card">
+      <div class="sys-icon">💻</div>
+      <div class="sys-name">Electronics</div>
+      <div class="sys-status concept">◌ Development Stage</div>
+      <div class="sys-focus">Data acquisition system, sensor integration, and real-time vehicle health monitoring to support driver performance analysis across all dynamic events.</div>
+    </div>
+    <div class="system-card">
+      <div class="sys-icon">🏗️</div>
+      <div class="sys-name">Manufacturing</div>
+      <div class="sys-status concept">◌ Preparation Phase</div>
+      <div class="sys-focus">Process planning, tooling procurement, and workshop preparation underway. The team is equipping itself for precision fabrication of all structural and mechanical components.</div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section id="journey" class="carbon-bg">
+  <div class="section-eyebrow">2026–27 Season</div>
+  <h2 class="section-title">Development <span class="accent">Journey</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="timeline">
+    <div class="tl-item visible">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 01</div>
+        <div class="tl-title">Team Formation</div>
+        <div class="tl-desc">Core team assembly and department structure establishment. Selecting motivated engineers across all subsystems.</div>
+      </div>
+    </div>
+    <div class="tl-item active visible">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 02</div>
+        <div class="tl-title">Formula Bharat Registration</div>
+        <div class="tl-desc">Official team registration, rulebook study, and competition preparation. Understanding the technical regulations fully.</div>
+      </div>
+    </div>
+    <div class="tl-item visible">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 03</div>
+        <div class="tl-title">Vehicle Concept &amp; Chassis Design</div>
+        <div class="tl-desc">Complete vehicle concept established. Chassis design finalised and ready for detailed analysis.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 04</div>
+        <div class="tl-title">CAD Development &amp; Simulation</div>
+        <div class="tl-desc">Full vehicle CAD model in progress. FEA, CFD, and kinematic simulations across all subsystems ongoing.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 05</div>
+        <div class="tl-title">Design Reviews &amp; Validation</div>
+        <div class="tl-desc">Internal design reviews and external mentor reviews. Incorporating feedback before committing to manufacturing.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 06</div>
+        <div class="tl-title">Manufacturing &amp; Fabrication</div>
+        <div class="tl-desc">NF-01 physical build begins. Chassis fabrication, component manufacturing, and system integration.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 07</div>
+        <div class="tl-title">Testing &amp; Validation</div>
+        <div class="tl-desc">Shake-down testing, system validation, and driver training. Preparing for competition-ready reliability.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--gold);box-shadow:0 0 16px rgba(201,168,76,0.7)"></div>
+      <div class="tl-content">
+        <div class="tl-milestone" style="color:var(--gold)">🏁 GOAL</div>
+        <div class="tl-title" style="color:var(--gold)">Formula Bharat 2027</div>
+        <div class="tl-desc">Nitro Forge Racing Team's debut competition. The culmination of a year of forging, engineering, and relentless preparation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="section-eyebrow">The Engineers</div>
+  <h2 class="section-title">Our <span class="accent">Team</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="team-lead-row reveal">
+    <div class="member-card">
+      <div class="member-avatar">👤</div>
+      <div class="member-name">Team Captain</div>
+      <div class="member-role">Captain</div>
+      <div class="member-dept">Nitro Forge Racing</div>
+    </div>
+    <div class="member-card">
+      <div class="member-avatar">👤</div>
+      <div class="member-name">Vice Captain</div>
+      <div class="member-role">Vice Captain</div>
+      <div class="member-dept">Nitro Forge Racing</div>
+    </div>
+  </div>
+
+  <div style="max-width:1200px;margin:0 auto;" class="reveal">
+    <div class="dept-grid">
+      <div class="dept-header">⚙ Chassis Team</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Chassis Lead</div><div class="member-dept">Chassis</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Chassis Engineer</div><div class="member-dept">Chassis</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Chassis Engineer</div><div class="member-dept">Chassis</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Chassis Engineer</div><div class="member-dept">Chassis</div></div>
+
+      <div class="dept-header">🔥 Powertrain Team</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Powertrain Lead</div><div class="member-dept">Powertrain</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Engine Engineer</div><div class="member-dept">Powertrain</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Drivetrain Engineer</div><div class="member-dept">Powertrain</div></div>
+
+      <div class="dept-header">🌬 Aerodynamics Team</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Aero Lead</div><div class="member-dept">Aerodynamics</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">CFD Engineer</div><div class="member-dept">Aerodynamics</div></div>
+
+      <div class="dept-header">💻 Electronics Team</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Electronics Lead</div><div class="member-dept">Electronics</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">DAQ Engineer</div><div class="member-dept">Electronics</div></div>
+
+      <div class="dept-header">🏗 Manufacturing Team</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Manufacturing Lead</div><div class="member-dept">Manufacturing</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Fabrication Engineer</div><div class="member-dept">Manufacturing</div></div>
+
+      <div class="dept-header">📊 Business &amp; Sponsorship</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Business Lead</div><div class="member-dept">Business</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Sponsorship Manager</div><div class="member-dept">Business</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPONSORS -->
+<section id="sponsors" class="carbon-bg">
+  <div class="section-eyebrow">Partnerships</div>
+  <h2 class="section-title">Build With <span class="accent">Us</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="sponsors-content reveal">
+    <div class="sponsor-hero">
+      <h3 class="sponsor-hero-title">Building Partnerships for Innovation</h3>
+      <p class="sponsor-hero-sub">Nitro Forge Racing Team is actively seeking industry partners and sponsors who share our vision of engineering excellence, innovation, and student development. Your support directly powers our Formula Student campaign.</p>
+      <a href="mailto:nitroforgeracing@gmail.com" class="btn-primary"><span>Become a Partner →</span></a>
+    </div>
+
+    <div class="sponsor-benefits">
+      <div class="benefit-item">
+        <div class="benefit-icon">🎯</div>
+        <div class="benefit-title">Brand Visibility</div>
+        <div class="benefit-desc">Logo placement on the race car, team kit, and all official materials.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🎓</div>
+        <div class="benefit-title">Campus Outreach</div>
+        <div class="benefit-desc">Direct access to top engineering talent at JNTUH UCESTH.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🤝</div>
+        <div class="benefit-title">Engineering Collaboration</div>
+        <div class="benefit-desc">Technical partnerships for real-world R&amp;D and product validation.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">📱</div>
+        <div class="benefit-title">Social Media Promotion</div>
+        <div class="benefit-desc">Dedicated mentions and features across all Nitro Forge platforms.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">💼</div>
+        <div class="benefit-title">Recruitment</div>
+        <div class="benefit-desc">Priority access to recruit high-performing Formula Student engineers.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem;">
+      <div style="font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.4em;text-transform:uppercase;color:var(--light-grey);margin-bottom:1rem;">Partner Slots Available</div>
+      <div class="partner-slots">
+        <div class="partner-slot">Title Sponsor</div>
+        <div class="partner-slot">Associate Sponsor</div>
+        <div class="partner-slot">Technical Partner</div>
+        <div class="partner-slot">Media Partner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-eyebrow">Behind the Scenes</div>
+  <h2 class="section-title">Team <span class="accent">Gallery</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="gallery-grid reveal">
+    <div class="gallery-item tall">
+      <div class="gallery-overlay"></div>
+      <div class="gallery-icon">🤝</div>
+      <div class="gallery-caption">Team Meetings</div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-overlay"></div>
+      <div class="gallery-icon">📐</div>
+      <div class="gallery-caption">Design Reviews</div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-overlay"></div>
+      <div class="gallery-icon">🖥️</div>
+      <div class="gallery-caption">CAD Development</div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-overlay"></div>
+      <div class="gallery-icon">🔩</div>
+      <div class="gallery-caption">Chassis Design</div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-overlay"></div>
+      <div class="gallery-icon">🔧</div>
+      <div class="gallery-caption">Workshops</div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-overlay"></div>
+      <div class="gallery-icon">🏭</div>
+      <div class="gallery-caption">Manufacturing Prep</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="carbon-bg">
+  <div class="section-eyebrow">Get In Touch</div>
+  <h2 class="section-title">Contact <span class="accent">Us</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="contact-grid reveal">
+    <div class="contact-info">
+      <h3>Nitro Forge Racing Team</h3>
+      <div class="contact-detail">
+        <div class="contact-icon">🏛️</div>
+        <div class="contact-text">JNTUH University College of Engineering Science and Technology<br>Hyderabad, Telangana, India</div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">📧</div>
+        <div class="contact-text"><a href="mailto:nitroforgeracing@gmail.com">nitroforgeracing@gmail.com</a></div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">🏁</div>
+        <div class="contact-text">Competing at Formula Bharat 2027<br>Combustion Vehicle Category</div>
+      </div>
+      <div class="social-row">
+        <a href="#" class="social-link">in LinkedIn</a>
+        <a href="#" class="social-link">📸 Instagram</a>
+        <a href="#" class="social-link">▶ YouTube</a>
+      </div>
+      <div style="margin-top:2rem;background:var(--dark);border:1px solid rgba(255,69,0,0.12);border-radius:4px;padding:1.5rem;font-size:0.85rem;color:rgba(240,240,240,0.45);line-height:1.7;">
+        <strong style="color:var(--flame)">For Sponsorship Enquiries</strong><br>
+        If you are an industry partner, component manufacturer, or organisation interested in supporting Nitro Forge Racing Team, please reach out directly via email or use the contact form.
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-input" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Organisation</label>
+        <input type="text" class="form-input" placeholder="Company / College">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Subject</label>
+        <input type="text" class="form-input" placeholder="Sponsorship / Collaboration / General">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="Tell us about yourself and how you'd like to partner with us..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%;border:none;cursor:pointer;font-size:1rem;" onclick="handleFormSubmit(event)"><span>Send Message →</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-text">NITRO FORGE RACING</div>
+      <div class="footer-tagline">"Where Speed is Engineered, Not Imagined."</div>
+      <p style="font-size:0.8rem;color:rgba(240,240,240,0.3);margin-top:1rem;line-height:1.6;">JNTUH University College of Engineering Science and Technology, Hyderabad · Formula Bharat 2027 · Combustion Category</p>
+    </div>
+    <div>
+      <div class="footer-nav-title">Navigate</div>
+      <ul class="footer-nav-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#formulabharat">Formula Bharat</a></li>
+        <li><a href="#vehicle">Our Vehicle</a></li>
+        <li><a href="#engineering">Engineering</a></li>
+        <li><a href="#journey">Journey</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-nav-title">Connect</div>
+      <ul class="footer-nav-links">
+        <li><a href="#team">Team</a></li>
+        <li><a href="#sponsors">Sponsors</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="mailto:nitroforgeracing@gmail.com">nitroforgeracing@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Nitro Forge Racing Team · JNTUH UCESTH · All Rights Reserved</div>
+    <div class="footer-copy" style="color:var(--flame);opacity:0.6;">Forged in Fire ·&nbsp; 🔥</div>
+  </div>
+</footer>
+
+<script>
+  // Loader
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('hidden');
+    }, 2000);
+  });
+
+  // Nav scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Mobile menu
+  function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // Ember particles
+  const emberContainer = document.getElementById('embers');
+  for (let i = 0; i < 25; i++) {
+    const e = document.createElement('div');
+    e.className = 'ember';
+    e.style.left = Math.random() * 100 + '%';
+    e.style.width = e.style.height = (Math.random() * 3 + 1) + 'px';
+    e.style.animationDuration = (Math.random() * 8 + 6) + 's';
+    e.style.animationDelay = (Math.random() * 8) + 's';
+    const hue = Math.random() > 0.5 ? 'rgba(255,69,0,' : 'rgba(201,168,76,';
+    e.style.background = hue + (Math.random() * 0.5 + 0.5) + ')';
+    emberContainer.appendChild(e);
+  }
+
+  // Countdown
+  function updateCountdown() {
+    const target = new Date('2027-01-20T08:00:00');
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) { return; }
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent = String(days).padStart(3, '0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+    document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal, .tl-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Progress bars
+  const progressObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const fills = entry.target.querySelectorAll('.progress-fill');
+        fills.forEach(f => {
+          f.style.width = f.dataset.width + '%';
+        });
+        progressObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  const vehicleSection = document.getElementById('vehicle');
+  if (vehicleSection) progressObs.observe(vehicleSection);
+
+  // Animated counters
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    if (isNaN(target)) return;
+    let start = 0;
+    const duration = 1500;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('[data-count]').forEach(animateCounter);
+        statsObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+  const heroStats = document.querySelector('.hero-stats');
+  if (heroStats) statsObserver.observe(heroStats);
+
+  // Form submit
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    const btn = e.target;
+    btn.querySelector('span').textContent = '✓ Message Sent!';
+    btn.style.background = 'linear-gradient(135deg, #2a7a2a, #3a9a3a)';
+    setTimeout(() => {
+      btn.querySelector('span').textContent = 'Send Message →';
+      btn.style.background = '';
+    }, 3000);
+  }
+</script>
+</body>
+</html>
