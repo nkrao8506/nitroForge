@@ -1,0 +1,85 @@
+#sponsors { background: var(--gunmetal); }
+
+.sponsors-content {
+  max-width: 900px;
+  margin: 3rem auto 0;
+}
+
+.sponsor-hero {
+  background: var(--dark);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 4px;
+  padding: 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
+.sponsor-hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.sponsor-hero-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+.sponsor-hero-sub { font-size: 1rem; color: rgba(240,240,240,0.6); max-width: 500px; margin: 0 auto 2rem; line-height: 1.7; }
+
+.sponsor-benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.benefit-item {
+  background: var(--gunmetal);
+  border: 1px solid rgba(255,69,0,0.12);
+  border-radius: 4px;
+  padding: 1.2rem;
+  text-align: center;
+}
+.benefit-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+.benefit-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--flame);
+}
+.benefit-desc { font-size: 0.8rem; color: rgba(240,240,240,0.5); margin-top: 0.3rem; }
+
+.partner-slots {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.partner-slot {
+  background: var(--dark);
+  border: 1px dashed rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 2rem 1rem;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240,240,240,0.2);
+  text-align: center;
+  transition: border-color 0.3s;
+}
+.partner-slot:hover { border-color: rgba(255,69,0,0.3); color: rgba(240,240,240,0.4); }
+
+@media (max-width: 900px) {
+  .partner-slots { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .partner-slots { grid-template-columns: 1fr; }
+}

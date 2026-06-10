@@ -1,0 +1,54 @@
+#engineering { background: var(--carbon); }
+
+.systems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.system-card {
+  background: var(--gunmetal);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 4px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.system-card:hover { transform: translateY(-4px); border-color: rgba(255,69,0,0.25); }
+.system-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: linear-gradient(180deg, var(--flame), var(--gold));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.system-card:hover::before { opacity: 1; }
+
+.sys-icon { font-size: 2rem; margin-bottom: 1rem; }
+.sys-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+.sys-status {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.sys-status.done { color: var(--gold); }
+.sys-status.progress { color: var(--flame); }
+.sys-status.concept { color: var(--light-grey); }
+
+.sys-focus { font-size: 0.85rem; color: rgba(240,240,240,0.5); line-height: 1.7; }
+
+@media (max-width: 600px) {
+  .systems-grid { grid-template-columns: 1fr; }
+}

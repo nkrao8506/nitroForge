@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nitro Forge Racing Team | Formula Bharat 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/loader.css">
+<link rel="stylesheet" href="assets/css/nav.css">
+<link rel="stylesheet" href="assets/css/hero.css">
+<link rel="stylesheet" href="assets/css/about.css">
+<link rel="stylesheet" href="assets/css/formulabharat.css">
+<link rel="stylesheet" href="assets/css/vehicle.css">
+<link rel="stylesheet" href="assets/css/engineering.css">
+<link rel="stylesheet" href="assets/css/journey.css">
+<link rel="stylesheet" href="assets/css/team.css">
+<link rel="stylesheet" href="assets/css/sponsors.css">
+<link rel="stylesheet" href="assets/css/gallery.css">
+<link rel="stylesheet" href="assets/css/contact.css">
+<link rel="stylesheet" href="assets/css/footer.css">
+<link rel="stylesheet" href="assets/css/modal.css">
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loader">
+  <div class="loader-logo">NITRO FORGE</div>
+  <div class="loader-sub">Racing Team · JNTUH UCESTH</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  <a href="#about" onclick="closeMobileMenu()">About</a>
+  <a href="#formulabharat" onclick="closeMobileMenu()">Formula Bharat</a>
+  <a href="#vehicle" onclick="closeMobileMenu()">Vehicle</a>
+  <a href="#journey" onclick="closeMobileMenu()">Journey</a>
+  <a href="#team" onclick="closeMobileMenu()">Team</a>
+  <a href="#sponsors" onclick="closeMobileMenu()">Sponsors</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+  <a href="#" onclick="closeMobileMenu(); setTimeout(openPartnerModal, 300); return false;">Partner With Us</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-brand">
+    <div class="nav-emblem">NF</div>
+    <div class="nav-name">NITRO <span>FORGE</span><br><span style="color:rgba(240,240,240,0.45);font-size:0.6rem;letter-spacing:0.2em;font-family:Inter,sans-serif;font-weight:400">RACING TEAM</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#formulabharat">Formula Bharat</a></li>
+    <li><a href="#vehicle">Vehicle</a></li>
+    <li><a href="#engineering">Engineering</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#sponsors">Sponsors</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="openPartnerModal(); return false;">Partner With Us</a>
+  <button class="nav-hamburger" onclick="openMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-slash"></div>
+  <div class="hero-slash2"></div>
+  <div class="embers" id="embers"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Formula Bharat 2027 · JNTUH UCESTH · Hyderabad</div>
+    <h1 class="hero-title">
+      <span class="nitro">Nitro</span> <span class="forge">Forge</span>
+      <span class="racing">Racing Team</span>
+      <span class="team">JNTUH University College of Engineering Science &amp; Technology</span>
+    </h1>
+    <p class="hero-tagline">"Where Speed is Engineered, Not Imagined."</p>
+    <p class="hero-sub">A Formula Student team forging the future of Indian motorsport engineering, preparing for Formula Bharat 2027 with precision, fire, and relentless innovation.</p>
+    <div class="hero-btns">
+      <a href="#about" class="btn-primary"><span>Explore Our Journey</span></a>
+      <a href="#sponsors" class="btn-secondary">Partner With Us</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="stat-num" data-count="2027" data-suffix="">FB2027</div>
+      <div class="stat-label">Formula Bharat Target</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num" data-count="33" data-suffix="">0</div>
+      <div class="stat-label">Team Members</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num">NF-01</div>
+      <div class="stat-label">First Race Car · In Development</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num" data-count="100" data-suffix="%">0%</div>
+      <div class="stat-label">Student Driven</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="carbon-bg">
+  <div class="section-eyebrow">Our Identity</div>
+  <h2 class="section-title">Forged in <span class="accent">Fire</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>Nitro Forge Racing Team is a student-led Formula Student team founded with the vision of creating a world-class engineering platform where <strong>innovation, manufacturing excellence, and motorsport passion</strong> converge into something extraordinary.</p>
+      <p>As a first-generation Formula Student team from JNTUH UCESTH, we are building our foundation from the ground up. Every component, every design decision, every manufacturing process — forged with purpose. The car is not merely built. <strong>It is forged.</strong></p>
+      <p>Our mission is not simply to build a race car. Our mission is to forge engineers capable of solving real-world challenges through design, teamwork, manufacturing, and innovation.</p>
+      <div class="about-pillars">
+        <div class="pillar"><div class="pillar-icon">⚡</div><div class="pillar-title">Nitro — Speed</div></div>
+        <div class="pillar"><div class="pillar-icon">🔥</div><div class="pillar-title">Forge — Craftsmanship</div></div>
+        <div class="pillar"><div class="pillar-icon">🎯</div><div class="pillar-title">Precision</div></div>
+        <div class="pillar"><div class="pillar-icon">💡</div><div class="pillar-title">Innovation</div></div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="about-badge">
+        <div class="badge-year">2026</div>
+        <div class="badge-label">Founded · Year One</div>
+        <div style="margin-top:1rem;font-size:0.8rem;color:rgba(240,240,240,0.4);line-height:1.6;">First-generation Formula<br>Student team · JNTUH UCESTH<br>Hyderabad, Telangana</div>
+      </div>
+      <div class="formula-badge">
+        <div class="fb">🏁 Formula Bharat 2027</div>
+        <div class="fb-detail">Combustion Vehicle Category · India's Premier Formula Student Competition</div>
+      </div>
+      <div style="margin-top:1rem;background:var(--dark);border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:1.2rem;">
+        <div style="font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--light-grey);margin-bottom:0.5rem;">Core Philosophy</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:600;color:var(--white);line-height:1.5;">"Forging raw engineering into explosive performance."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULA BHARAT -->
+<section id="formulabharat">
+  <div class="section-eyebrow">The Competition</div>
+  <h2 class="section-title"><span class="accent">Formula</span> Bharat 2027</h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <p class="fb-intro reveal">Formula Bharat is India's premier Formula Student competition where engineering students design, manufacture, validate, and race a formula-style race car — competing across both static and dynamic events that test every aspect of the vehicle and the team behind it.</p>
+
+  <div class="events-grid reveal">
+    <div class="event-card static-event">
+      <div class="event-type">⬡ Static Event</div>
+      <div class="event-name">Engineering Design</div>
+      <div class="event-desc">Judges evaluate the technical merit and innovation of the vehicle design against the rules and engineering best practices.</div>
+    </div>
+    <div class="event-card static-event">
+      <div class="event-type">⬡ Static Event</div>
+      <div class="event-name">Cost &amp; Manufacturing</div>
+      <div class="event-desc">Teams present a detailed cost report demonstrating real-world manufacturing awareness and economic considerations.</div>
+    </div>
+    <div class="event-card static-event">
+      <div class="event-type">⬡ Static Event</div>
+      <div class="event-name">Business Presentation</div>
+      <div class="event-desc">A business case for producing and selling the vehicle as a marketable product to a fictitious manufacturer.</div>
+    </div>
+    <div class="event-card dynamic-event">
+      <div class="event-type">◆ Dynamic Event</div>
+      <div class="event-name">Acceleration</div>
+      <div class="event-desc">Straight-line sprint over 75 meters from a standing start — pure powertrain performance.</div>
+    </div>
+    <div class="event-card dynamic-event">
+      <div class="event-type">◆ Dynamic Event</div>
+      <div class="event-name">Skid Pad &amp; Autocross</div>
+      <div class="event-desc">Circular handling test and a tight technical course evaluating lateral dynamics and driver skill.</div>
+    </div>
+    <div class="event-card dynamic-event">
+      <div class="event-type">◆ Dynamic Event</div>
+      <div class="event-name">Endurance &amp; Efficiency</div>
+      <div class="event-desc">The flagship event — a 22-kilometre race that tests reliability, driver performance, and fuel efficiency over time.</div>
+    </div>
+  </div>
+
+  <div class="countdown-wrapper reveal">
+    <div class="countdown-label">🏁 Countdown to Formula Bharat 2027</div>
+    <div class="countdown-grid">
+      <div class="cd-unit"><div class="cd-num" id="cd-days">---</div><div class="cd-label">Days</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num" id="cd-hours">--</div><div class="cd-label">Hours</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num" id="cd-mins">--</div><div class="cd-label">Minutes</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-num" id="cd-secs">--</div><div class="cd-label">Seconds</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VEHICLE -->
+<section id="vehicle" class="carbon-bg">
+  <div class="section-eyebrow">First Machine</div>
+  <h2 class="section-title">Project <span class="accent">NF-01</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="vehicle-layout reveal">
+    <div>
+      <div class="car-render">
+        <div class="car-placeholder-icon">🏎</div>
+        <div class="car-placeholder-text">NF-01 Concept Render Coming Soon</div>
+        <div class="car-badge">
+          <div class="car-designation">NF-01</div>
+          <div class="car-status">⚙ Under Development</div>
+        </div>
+      </div>
+      <div style="margin-top:1rem;background:var(--dark);border:1px solid rgba(255,255,255,0.06);border-radius:4px;padding:1.2rem;">
+        <p style="font-size:0.85rem;color:rgba(240,240,240,0.5);line-height:1.7;">NF-01 represents the first Formula Student race car developed by Nitro Forge Racing Team — built around the philosophy of lightweight design, structural integrity, performance, and reliability. Every component embodies our vision of engineering excellence.</p>
+      </div>
+    </div>
+    <div class="development-phases">
+      <div style="font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--flame);margin-bottom:1.5rem;">Development Status</div>
+      <div class="dev-phase">
+        <div class="phase-header"><span class="phase-name">Concept Design</span><span class="phase-pct">100%</span></div>
+        <div class="progress-bar"><div class="progress-fill" data-width="100"></div></div>
+      </div>
+      <div class="dev-phase">
+        <div class="phase-header"><span class="phase-name">Chassis Design</span><span class="phase-pct">100%</span></div>
+        <div class="progress-bar"><div class="progress-fill" data-width="100"></div></div>
+      </div>
+      <div class="dev-phase">
+        <div class="phase-header"><span class="phase-name">CAD Development</span><span class="phase-pct">60%</span></div>
+        <div class="progress-bar"><div class="progress-fill" data-width="60"></div></div>
+      </div>
+      <div class="dev-phase">
+        <div class="phase-header"><span class="phase-name">Simulation &amp; Analysis</span><span class="phase-pct">40%</span></div>
+        <div class="progress-bar"><div class="progress-fill" data-width="40"></div></div>
+      </div>
+      <div class="dev-phase">
+        <div class="phase-header"><span class="phase-name">Manufacturing</span><span class="phase-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" data-width="0"></div></div>
+      </div>
+      <div class="dev-phase">
+        <div class="phase-header"><span class="phase-name">Testing &amp; Validation</span><span class="phase-pct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" data-width="0"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGINEERING -->
+<section id="engineering">
+  <div class="section-eyebrow">Technical Overview</div>
+  <h2 class="section-title">Design &amp; <span class="accent">Engineering</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="systems-grid reveal">
+    <div class="system-card">
+      <div class="sys-icon">🔩</div>
+      <div class="sys-name">Chassis System</div>
+      <div class="sys-status done">✦ Design Completed</div>
+      <div class="sys-focus">Safety-first frame engineered for structural strength and driver protection, fully compliant with Formula Bharat regulations. Steel space-frame architecture optimised for torsional rigidity.</div>
+    </div>
+    <div class="system-card">
+      <div class="sys-icon">⚙️</div>
+      <div class="sys-name">Powertrain</div>
+      <div class="sys-status progress">● In Development</div>
+      <div class="sys-focus">Combustion engine integration focused on peak performance, torque delivery, and long-run reliability. Drivetrain layout optimised for the endurance event.</div>
+    </div>
+    <div class="system-card">
+      <div class="sys-icon">🔧</div>
+      <div class="sys-name">Suspension</div>
+      <div class="sys-status progress">● In Development</div>
+      <div class="sys-focus">Double-wishbone setup designed for precise handling and maximum driver feedback. Geometry validated through kinematic simulation for all competition events.</div>
+    </div>
+    <div class="system-card">
+      <div class="sys-icon">🌬️</div>
+      <div class="sys-name">Aerodynamics</div>
+      <div class="sys-status concept">◌ Concept Stage</div>
+      <div class="sys-focus">Front wing and diffuser concept under development targeting meaningful downforce gains within the weight and cost constraints of a first-year build.</div>
+    </div>
+    <div class="system-card">
+      <div class="sys-icon">💻</div>
+      <div class="sys-name">Electronics</div>
+      <div class="sys-status concept">◌ Development Stage</div>
+      <div class="sys-focus">Data acquisition system, sensor integration, and real-time vehicle health monitoring to support driver performance analysis across all dynamic events.</div>
+    </div>
+    <div class="system-card">
+      <div class="sys-icon">🏗️</div>
+      <div class="sys-name">Manufacturing</div>
+      <div class="sys-status concept">◌ Preparation Phase</div>
+      <div class="sys-focus">Process planning, tooling procurement, and workshop preparation underway. The team is equipping itself for precision fabrication of all structural and mechanical components.</div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section id="journey" class="carbon-bg">
+  <div class="section-eyebrow">2026–27 Season</div>
+  <h2 class="section-title">Development <span class="accent">Journey</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="timeline">
+    <div class="tl-item visible">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 01</div>
+        <div class="tl-title">Team Formation</div>
+        <div class="tl-desc">Core team assembly and department structure establishment. Selecting motivated engineers across all subsystems.</div>
+      </div>
+    </div>
+    <div class="tl-item active visible">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 02</div>
+        <div class="tl-title">Formula Bharat Registration</div>
+        <div class="tl-desc">Official team registration, rulebook study, and competition preparation. Understanding the technical regulations fully.</div>
+      </div>
+    </div>
+    <div class="tl-item visible">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 03</div>
+        <div class="tl-title">Vehicle Concept &amp; Chassis Design</div>
+        <div class="tl-desc">Complete vehicle concept established. Chassis design finalised and ready for detailed analysis.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 04</div>
+        <div class="tl-title">CAD Development &amp; Simulation</div>
+        <div class="tl-desc">Full vehicle CAD model in progress. FEA, CFD, and kinematic simulations across all subsystems ongoing.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 05</div>
+        <div class="tl-title">Design Reviews &amp; Validation</div>
+        <div class="tl-desc">Internal design reviews and external mentor reviews. Incorporating feedback before committing to manufacturing.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 06</div>
+        <div class="tl-title">Manufacturing &amp; Fabrication</div>
+        <div class="tl-desc">NF-01 physical build begins. Chassis fabrication, component manufacturing, and system integration.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-milestone">Phase 07</div>
+        <div class="tl-title">Testing &amp; Validation</div>
+        <div class="tl-desc">Shake-down testing, system validation, and driver training. Preparing for competition-ready reliability.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--gold);box-shadow:0 0 16px rgba(201,168,76,0.7)"></div>
+      <div class="tl-content">
+        <div class="tl-milestone" style="color:var(--gold)">🏁 GOAL</div>
+        <div class="tl-title" style="color:var(--gold)">Formula Bharat 2027</div>
+        <div class="tl-desc">Nitro Forge Racing Team's debut competition. The culmination of a year of forging, engineering, and relentless preparation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="section-eyebrow">The Engineers</div>
+  <h2 class="section-title">Our <span class="accent">Team</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="team-lead-row reveal">
+    <div class="member-card">
+      <div class="member-avatar">👤</div>
+      <div class="member-name">Team Captain</div>
+      <div class="member-role">Captain</div>
+      <div class="member-dept">Nitro Forge Racing</div>
+    </div>
+    <div class="member-card">
+      <div class="member-avatar">👤</div>
+      <div class="member-name">Vice Captain</div>
+      <div class="member-role">Vice Captain</div>
+      <div class="member-dept">Nitro Forge Racing</div>
+    </div>
+  </div>
+
+  <div style="max-width:1200px;margin:0 auto;" class="reveal">
+    <div class="dept-grid">
+      <div class="dept-header">📐 Design &amp; Simulation</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Design Lead</div><div class="member-dept">Design &amp; Simulation</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">CAD Engineer</div><div class="member-dept">Design &amp; Simulation</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">FEA Engineer</div><div class="member-dept">Design &amp; Simulation</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">CFD Engineer</div><div class="member-dept">Design &amp; Simulation</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Simulation Engineer</div><div class="member-dept">Design &amp; Simulation</div></div>
+
+      <div class="dept-header">🔥 Powertrain &amp; Drivetrain</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Powertrain Lead</div><div class="member-dept">Powertrain &amp; Drivetrain</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Engine Engineer</div><div class="member-dept">Powertrain &amp; Drivetrain</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Drivetrain Engineer</div><div class="member-dept">Powertrain &amp; Drivetrain</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Transmission Engineer</div><div class="member-dept">Powertrain &amp; Drivetrain</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Performance Engineer</div><div class="member-dept">Powertrain &amp; Drivetrain</div></div>
+
+      <div class="dept-header">🔧 Suspension</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Suspension Lead</div><div class="member-dept">Suspension</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Suspension Engineer</div><div class="member-dept">Suspension</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Suspension Engineer</div><div class="member-dept">Suspension</div></div>
+
+      <div class="dept-header">🌀 Steering</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Steering Lead</div><div class="member-dept">Steering</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Steering Engineer</div><div class="member-dept">Steering</div></div>
+
+      <div class="dept-header">🛑 Braking</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Braking Lead</div><div class="member-dept">Braking</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Braking Engineer</div><div class="member-dept">Braking</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Braking Engineer</div><div class="member-dept">Braking</div></div>
+
+      <div class="dept-header">💻 Electronics</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Electronics Lead</div><div class="member-dept">Electronics</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">PCB Engineer</div><div class="member-dept">Electronics</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">DAQ Engineer</div><div class="member-dept">Electronics</div></div>
+
+      <div class="dept-header">⚡ Electrical</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Electrical Lead</div><div class="member-dept">Electrical</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Wiring Engineer</div><div class="member-dept">Electrical</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">BMS Engineer</div><div class="member-dept">Electrical</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Harness Engineer</div><div class="member-dept">Electrical</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Electrical Engineer</div><div class="member-dept">Electrical</div></div>
+
+      <div class="dept-header">🏗 Manufacturing</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Manufacturing Lead</div><div class="member-dept">Manufacturing</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Fabrication Engineer</div><div class="member-dept">Manufacturing</div></div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Composite Engineer</div><div class="member-dept">Manufacturing</div></div>
+
+      <div class="dept-header">📊 Business Presentation</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Business Presenter</div><div class="member-dept">Business Presentation</div></div>
+
+      <div class="dept-header">📱 Media &amp; Marketing</div>
+      <div class="member-card"><div class="member-avatar">👤</div><div class="member-name">Member</div><div class="member-role">Marketing Lead</div><div class="member-dept">Media &amp; Marketing</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPONSORS -->
+<section id="sponsors" class="carbon-bg">
+  <div class="section-eyebrow">Partnerships</div>
+  <h2 class="section-title">Build With <span class="accent">Us</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="sponsors-content reveal">
+    <div class="sponsor-hero">
+      <h3 class="sponsor-hero-title">Building Partnerships for Innovation</h3>
+      <p class="sponsor-hero-sub">Nitro Forge Racing Team is actively seeking industry partners and sponsors who share our vision of engineering excellence, innovation, and student development. Your support directly powers our Formula Student campaign.</p>
+      <a href="#" class="btn-primary" onclick="openPartnerModal(); return false;"><span>Become a Partner →</span></a>
+    </div>
+
+    <div class="sponsor-benefits">
+      <div class="benefit-item">
+        <div class="benefit-icon">🎯</div>
+        <div class="benefit-title">Brand Visibility</div>
+        <div class="benefit-desc">Logo placement on the race car, team kit, and all official materials.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🎓</div>
+        <div class="benefit-title">Campus Outreach</div>
+        <div class="benefit-desc">Direct access to top engineering talent at JNTUH UCESTH.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🤝</div>
+        <div class="benefit-title">Engineering Collaboration</div>
+        <div class="benefit-desc">Technical partnerships for real-world R&amp;D and product validation.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">📱</div>
+        <div class="benefit-title">Social Media Promotion</div>
+        <div class="benefit-desc">Dedicated mentions and features across all Nitro Forge platforms.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">💼</div>
+        <div class="benefit-title">Recruitment</div>
+        <div class="benefit-desc">Priority access to recruit high-performing Formula Student engineers.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem;">
+      <div style="font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.4em;text-transform:uppercase;color:var(--light-grey);margin-bottom:1rem;">Partner Slots Available</div>
+      <div class="partner-slots">
+        <div class="partner-slot">Title Sponsor</div>
+        <div class="partner-slot">Associate Sponsor</div>
+        <div class="partner-slot">Technical Partner</div>
+        <div class="partner-slot">Media Partner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-eyebrow">Behind the Scenes</div>
+  <h2 class="section-title">Team <span class="accent">Gallery</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="gallery-grid reveal">
+    <div class="gallery-item tall">
+      <div class="gallery-overlay"></div>
+      <div class="gallery-icon">🤝</div>
+      <div class="gallery-caption">Team Meetings</div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-overlay"></div>
+      <div class="gallery-icon">📐</div>
+      <div class="gallery-caption">Design Reviews</div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-overlay"></div>
+      <div class="gallery-icon">🖥️</div>
+      <div class="gallery-caption">CAD Development</div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-overlay"></div>
+      <div class="gallery-icon">🔩</div>
+      <div class="gallery-caption">Chassis Design</div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-overlay"></div>
+      <div class="gallery-icon">🔧</div>
+      <div class="gallery-caption">Workshops</div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-overlay"></div>
+      <div class="gallery-icon">🏭</div>
+      <div class="gallery-caption">Manufacturing Prep</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="carbon-bg">
+  <div class="section-eyebrow">Get In Touch</div>
+  <h2 class="section-title">Contact <span class="accent">Us</span></h2>
+  <div class="slash-divider"><div class="slash-icon"></div></div>
+
+  <div class="contact-grid reveal">
+    <div class="contact-info">
+      <h3>Nitro Forge Racing Team</h3>
+      <div class="contact-detail">
+        <div class="contact-icon">🏛️</div>
+        <div class="contact-text">JNTUH University College of Engineering Science and Technology<br>Hyderabad, Telangana, India</div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">📧</div>
+        <div class="contact-text"><a href="mailto:nitroforgeracing@gmail.com">nitroforgeracing@gmail.com</a></div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">🏁</div>
+        <div class="contact-text">Competing at Formula Bharat 2027<br>Combustion Vehicle Category</div>
+      </div>
+      <div class="social-row">
+        <a href="#" class="social-link">in LinkedIn</a>
+        <a href="#" class="social-link">📸 Instagram</a>
+        <a href="#" class="social-link">▶ YouTube</a>
+      </div>
+      <div style="margin-top:2rem;background:var(--dark);border:1px solid rgba(255,69,0,0.12);border-radius:4px;padding:1.5rem;font-size:0.85rem;color:rgba(240,240,240,0.45);line-height:1.7;">
+        <strong style="color:var(--flame)">For Sponsorship Enquiries</strong><br>
+        If you are an industry partner, component manufacturer, or organisation interested in supporting Nitro Forge Racing Team, please reach out directly via email or use the contact form.
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-input" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Organisation</label>
+        <input type="text" class="form-input" placeholder="Company / College">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Subject</label>
+        <input type="text" class="form-input" placeholder="Sponsorship / Collaboration / General">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="Tell us about yourself and how you'd like to partner with us..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%;border:none;cursor:pointer;font-size:1rem;" onclick="handleFormSubmit(event)"><span>Send Message →</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNER MODAL -->
+<div class="partner-modal" id="partnerModal">
+  <div class="partner-modal-overlay" onclick="closePartnerModal()"></div>
+  <div class="partner-modal-content">
+    <button class="partner-modal-close" onclick="closePartnerModal()">✕</button>
+    <div class="partner-modal-header">Partner With Nitro Forge</div>
+    <div class="partner-modal-body">
+      <div class="partner-qr-section" style="text-align:center">
+        <div class="partner-qr-label">Scan to Pay / Donate</div>
+        <img src="assets/images/qr-partner.jpeg" alt="UPI QR Code" class="partner-qr-img" onload="this.style.display='block'; this.nextElementSibling.style.display='none'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" style="display:none">
+        <div class="partner-qr-fallback">QR code image not found.<br>Place it at <strong>assets/images/qr-partner.jpg</strong></div>
+      </div>
+      <div class="partner-details-section">
+        <div class="partner-details-title">Bank Details</div>
+        <div class="partner-detail"><span class="partner-detail-label">Account Holder</span><span class="partner-detail-value">Yammani Sai Deekshith</span></div>
+        <div class="partner-detail"><span class="partner-detail-label">Account Number</span><span class="partner-detail-value">42000266785</span></div>
+        <div class="partner-detail"><span class="partner-detail-label">IFSC Code</span><span class="partner-detail-value">SBIN0020947</span></div>
+        <div class="partner-detail"><span class="partner-detail-label">Account Type</span><span class="partner-detail-value">Savings Bank Account</span></div>
+        <div class="partner-detail"><span class="partner-detail-label">Mobile</span><span class="partner-detail-value">+91 94937 33910</span></div>
+        <div class="partner-detail"><span class="partner-detail-label">Email</span><span class="partner-detail-value">yammanisaideekshith@gmail.com</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-text">NITRO FORGE RACING</div>
+      <div class="footer-tagline">"Where Speed is Engineered, Not Imagined."</div>
+      <p style="font-size:0.8rem;color:rgba(240,240,240,0.3);margin-top:1rem;line-height:1.6;">JNTUH University College of Engineering Science and Technology, Hyderabad · Formula Bharat 2027 · Combustion Category</p>
+    </div>
+    <div>
+      <div class="footer-nav-title">Navigate</div>
+      <ul class="footer-nav-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#formulabharat">Formula Bharat</a></li>
+        <li><a href="#vehicle">Our Vehicle</a></li>
+        <li><a href="#engineering">Engineering</a></li>
+        <li><a href="#journey">Journey</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-nav-title">Connect</div>
+      <ul class="footer-nav-links">
+        <li><a href="#team">Team</a></li>
+        <li><a href="#sponsors">Sponsors</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="mailto:nitroforgeracing@gmail.com">nitroforgeracing@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Nitro Forge Racing Team · JNTUH UCESTH · All Rights Reserved</div>
+    <div class="footer-copy" style="color:var(--flame);opacity:0.6;">Forged in Fire ·&nbsp; 🔥</div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

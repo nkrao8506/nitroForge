@@ -1,0 +1,91 @@
+#about { background: var(--gunmetal); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 3rem auto 0;
+}
+
+.about-text p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(240,240,240,0.65);
+  margin-bottom: 1.2rem;
+}
+.about-text p strong { color: var(--white); font-weight: 600; }
+
+.about-pillars {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pillar {
+  background: var(--dark);
+  border: 1px solid rgba(255,69,0,0.12);
+  border-left: 3px solid var(--flame);
+  padding: 1rem 1.2rem;
+  border-radius: 2px;
+  transition: border-color 0.3s, background 0.3s;
+}
+.pillar:hover { background: rgba(255,69,0,0.05); border-color: rgba(255,69,0,0.4); }
+
+.pillar-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
+.pillar-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.95rem; font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.about-visual { position: relative; }
+
+.about-badge {
+  background: var(--dark);
+  border: 1px solid rgba(255,69,0,0.2);
+  border-radius: 4px;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.about-badge::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--flame), var(--gold));
+}
+.badge-year {
+  font-family: 'Orbitron', monospace;
+  font-size: 4rem; font-weight: 900;
+  color: var(--flame);
+  line-height: 1;
+  text-shadow: 0 0 40px rgba(255,69,0,0.3);
+}
+.badge-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.8rem; letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--light-grey);
+}
+
+.formula-badge {
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, rgba(255,69,0,0.1), rgba(201,168,76,0.1));
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 4px;
+  padding: 1.5rem;
+}
+.formula-badge .fb { font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; }
+.formula-badge .fb-detail { font-size: 0.8rem; color: var(--light-grey); margin-top: 0.3rem; }
+
+@media (max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+@media (max-width: 600px) {
+  .about-pillars { grid-template-columns: 1fr; }
+}
